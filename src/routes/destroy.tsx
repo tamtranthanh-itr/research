@@ -9,7 +9,7 @@ interface IContactAction {
 }
 
 export async function action({ params }: IContactAction) {
-  throw new Error('oh dang!')
+  // throw new Error('oh dang!')
   await deleteContact(params.contactId)
   return redirect('/')
 }

@@ -8,7 +8,6 @@ import ErrorPage from '~/routes/errorPage'
 import Root, { loader as rootLoader, action as rootAction } from '~/routes/root'
 import { getContacts } from '~/utils'
 import { action as destroyAction } from '~/routes/destroy'
-import Index from '~/routes'
 
 export async function loader() {
   const contacts = await getContacts()
@@ -26,7 +25,13 @@ const router = createBrowserRouter([
       {
         errorElement: <ErrorPage />,
         children: [
-          { index: true, element: <Index /> },
+          {
+            index: true,
+            async lazy() {
+              const { Index } = await import('~/routes')
+              return { Component: Index }
+            }
+          },
           {
             path: 'contacts/:contactId',
             element: <Contact />,
